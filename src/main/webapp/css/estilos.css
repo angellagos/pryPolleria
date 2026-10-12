@@ -1,0 +1,6 @@
+.encabezado{padding:20px}
+.menu{display:flex;gap:20px;padding:10px 20px}
+.contenido{padding:20px}
+.servicios{display:flex;gap:20px}
+.tarjeta{padding:15px;border:1px solid #ccc}
+.pie{padding:15px}
