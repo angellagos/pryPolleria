@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -7,138 +8,215 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Productos | Pollería</title>
 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+              rel="stylesheet">
+
+
         <link href="${pageContext.request.contextPath}/css/productoStyle.css"
               rel="stylesheet" type="text/css"/>
     </head>
 
-    <body>
-        <div class="contenedor">
-            <h1>Gestión de Menu</h1>
-            <p>Alimentos registrados en la pollería.</p>
+    <body class="bg-light">
 
-            <c:if test="${not empty error}">
-                <p style="color: #c0392b;">${error}</p>
-            </c:if>
+        <jsp:include page="menu.jsp" />
 
-            <c:if test="${param.registro == 'exito'}">
-                <p style="color: #218838;">
-                    Producto registrado correctamente.
-                </p>
-            </c:if>
+        <div class="container py-4">
+            <div class="bg-white rounded-4 shadow-sm p-4 p-md-5">
 
-            <c:if test="${param.eliminacion == 'exito'}">
-                <p style="color: #218838;">
-                    Producto eliminado correctamente.
-                </p>
-            </c:if>
+                <div class="mb-4">
+                    <h1 class="fw-bold mb-2" style="color: #e87524;">
+                        Gestión de productos
+                    </h1>
+                    <p class="text-secondary mb-0">
+                        Administra los alimentos registrados en la pollería.
+                    </p>
+                </div>
 
-            <h2>Registrar producto</h2>
+                <c:if test="${not empty error}">
+                    <p style="color: #c0392b;">${error}</p>
+                </c:if>
 
-            <form action="${pageContext.request.contextPath}/productos"
-                  method="post">
+                <c:if test="${param.registro == 'exito'}">
+                    <p style="color: #218838;">
+                        Producto registrado correctamente.
+                    </p>
+                </c:if>
 
-                <label for="nombre">Nombre del producto:</label><br>
-                <input type="text" id="nombre" name="nombre"
-                       maxlength="100" required>
-                <br><br>
+                <c:if test="${param.eliminacion == 'exito'}">
+                    <p style="color: #218838;">
+                        Producto eliminado correctamente.
+                    </p>
+                </c:if>
 
-                <label for="descripcion">Descripción:</label><br>
-                <textarea id="descripcion" name="descripcion"
-                          rows="3" maxlength="500"></textarea>
-                <br><br>
+                <div class="card border-0 shadow-sm mb-5">
 
-                <label for="precio">Precio (S/):</label><br>
-                <input type="number" id="precio" name="precio"
-                       min="0.01" step="0.01" required>
-                <br><br>
+                    <div class="card-header bg-white py-3">
+                        <h2 class="h5 fw-bold mb-0">Registrar producto</h2>
+                    </div>
 
-                <label for="idCategoria">Categoría:</label><br>
-                <select id="idCategoria" name="idCategoria" required>
-                    <option value="">Selecciona una categoría</option>
+                    <div class="card-body">
+                        <form action="${pageContext.request.contextPath}/productos"
+                              method="post">
 
-                    <c:forEach var="categoria" items="${categorias}">
-                        <option value="${categoria.idCategoria}">
-                            ${categoria.nombre}
-                        </option>
-                    </c:forEach>
-                </select>
-                <br><br>
+                            <div class="row g-3">
 
-                <button type="submit">Registrar producto</button>
-            </form>
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">
+                                        Nombre del producto
+                                    </label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="nombre"
+                                           name="nombre"
+                                           maxlength="100"
+                                           required>
+                                </div>
 
-            <hr>
-            <h2>Productos registrados</h2>
+                                <div class="col-md-6">
+                                    <label for="precio" class="form-label">
+                                        Precio (S/)
+                                    </label>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="precio"
+                                           name="precio"
+                                           min="0.01"
+                                           step="0.01"
+                                           required>
+                                </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Producto</th>
-                        <th>Categoría</th>
-                        <th>Precio</th>
-                        <th>Disponibilidad</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
+                                <div class="col-md-6">
+                                    <label for="idCategoria" class="form-label">
+                                        Categoría
+                                    </label>
+                                    <select id="idCategoria"
+                                            name="idCategoria"
+                                            class="form-select"
+                                            required>
+                                        <option value="">Selecciona una categoría</option>
 
-                <tbody>
-                    <c:choose>
-                        <c:when test="${empty productos}">
+                                        <c:forEach var="categoria" items="${categorias}">
+                                            <option value="${categoria.idCategoria}">
+                                                ${categoria.nombre}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="descripcion" class="form-label">
+                                        Descripción
+                                    </label>
+                                    <textarea id="descripcion"
+                                              name="descripcion"
+                                              class="form-control"
+                                              rows="3"
+                                              maxlength="500"></textarea>
+                                </div>
+
+                                <div class="col-12 text-end">
+                                    <button type="submit" class="btn btn-guardar">
+                                        Registrar producto
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <hr>
+                <h2 class="h4 fw-bold mb-3">Productos registrados</h2>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-light">
                             <tr>
-                                <td colspan="6" class="vacio">
-                                    No hay productos registrados.
-                                </td>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Disponibilidad</th>
+                                <th>Acciones</th>
                             </tr>
-                        </c:when>
+                        </thead>
 
-                        <c:otherwise>
-                            <c:forEach var="producto" items="${productos}">
-                                <tr>
-                                    <td>${producto.idProducto}</td>
-                                    <td>${producto.nombre}</td>
-                                    <td>${producto.categoria.nombre}</td>
-                                    <td class="precio">
-                                        S/ ${producto.precio}
-                                    </td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${producto.disponible}">
-                                                <span class="disponible">Disponible</span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="agotado">No disponible</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/productos?accion=editar&id=${producto.idProducto}">
-                                            Editar
-                                        </a>
+                        <tbody>
+                            <c:choose>
+                                <c:when test="${empty productos}">
+                                    <tr>
+                                        <td colspan="6" class="text-center text-secondary py-4">
+                                            No hay productos registrados.
+                                        </td>
+                                    </tr>
+                                </c:when>
 
-                                        <form action="${pageContext.request.contextPath}/productos"
-                                              method="post"
-                                              style="display: inline;"
-                                              onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                <c:otherwise>
+                                    <c:forEach var="producto" items="${productos}">
+                                        <tr>
+                                            <td>${producto.idProducto}</td>
+                                            <td class="fw-semibold">${producto.nombre}</td>
+                                            <td>${producto.categoria.nombre}</td>
 
-                                            <input type="hidden" name="accion" value="eliminar">
-                                            <input type="hidden" name="idProducto"
-                                                   value="${producto.idProducto}">
+                                            <td class="text-nowrap">
+                                                S/ <fmt:formatNumber value="${producto.precio}"
+                                                                  minFractionDigits="2"
+                                                                  maxFractionDigits="2"/>
+                                            </td>
 
-                                            <button type="submit"
-                                                    style="background-color: #c0392b; color: white;
-                                                    border: none; padding: 7px 10px;
-                                                    border-radius: 4px; cursor: pointer;">
-                                                Eliminar
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </c:otherwise>
-                    </c:choose>
-                </tbody>
-            </table>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${producto.disponible}">
+                                                        <span class="badge text-bg-success">
+                                                            Disponible
+                                                        </span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="badge text-bg-secondary">
+                                                            No disponible
+                                                        </span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+
+                                            <td>
+                                                <div class="d-flex gap-2 flex-wrap">
+                                                    <a class="btn btn-sm btn-outline-warning"
+                                                       href="${pageContext.request.contextPath}/productos?accion=editar&id=${producto.idProducto}">
+                                                        Editar
+                                                    </a>
+
+                                                    <form action="${pageContext.request.contextPath}/productos"
+                                                          method="post"
+                                                          onsubmit="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+
+                                                        <input type="hidden" name="accion"
+                                                               value="eliminar">
+                                                        <input type="hidden" name="idProducto"
+                                                               value="${producto.idProducto}">
+
+                                                        <button type="submit"
+                                                                class="btn btn-sm btn-danger">
+                                                            Eliminar
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     </body>
+
 </html>

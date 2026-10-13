@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
 
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -18,6 +19,7 @@
     </head>
 
     <body class="bg-light">
+        <jsp:include page="menu.jsp" />
 
         <div class="container py-5">
 

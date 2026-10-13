@@ -60,3 +60,18 @@ tr:hover {
     text-align: center;
     padding: 25px;
 }
+
+.btn-guardar {
+    background-color: #e87524;
+    color: #ffffff;
+    border: 1px solid #e87524;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+}
+
+.btn-guardar:hover {
+    background-color: #c95d16;
+    border-color: #c95d16;
+    color: #ffffff;
+}
