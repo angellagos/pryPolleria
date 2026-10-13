@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 30px;
+    color: #333;
+}
+
+.contenedor {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #00000015;
+}
+
+h1 {
+    color: #d35400;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #d35400;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+.vacio {
+    text-align: center;
+    padding: 25px;
+}
+
+/* Botones principales */
+.btn-guardar {
+    background-color: #e87524;
+    color: #fff;
+    border: 1px solid #e87524;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-guardar:hover {
+    background-color: #c95d16;
+    border-color: #c95d16;
+    color: #fff;
+}
+
+.btn-guardar:focus {
+    box-shadow: 0 0 0 0.2rem rgba(232, 117, 36, 0.25);
+}
+
+.btn-secundario {
+    border: 1px solid #e87524;
+    color: #e87524;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-weight: 600;
+}
+
+.btn-secundario:hover {
+    background-color: #fff1e6;
+    color: #c95d16;
+    border-color: #c95d16;
+}

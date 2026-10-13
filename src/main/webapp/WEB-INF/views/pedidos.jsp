@@ -10,248 +10,257 @@
 
         <title>Gestión de pedidos | Pollería</title>
 
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f5f5f5;
-                margin: 0;
-                padding: 30px;
-                color: #333;
-            }
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+              rel="stylesheet">
 
-            .contenedor {
-                max-width: 1100px;
-                margin: auto;
-                background: white;
-                padding: 25px;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px #00000015;
-            }
-
-            h1 {
-                color: #d35400;
-            }
-
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-top: 20px;
-            }
-
-            th, td {
-                padding: 12px;
-                border-bottom: 1px solid #ddd;
-                text-align: left;
-            }
-
-            th {
-                background-color: #d35400;
-                color: white;
-            }
-
-            tr:hover {
-                background-color: #f9f9f9;
-            }
-
-            .vacio {
-                text-align: center;
-                padding: 25px;
-            }
-        </style>
+        <link href="${pageContext.request.contextPath}/css/pedidoStyle.css"
+              rel="stylesheet" type="text/css"/>
     </head>
 
-    <body>
-        <div class="contenedor">
+    <body class="bg-light">
 
-            <div style="display: flex;
-                 justify-content: space-between;
-                 align-items: center;
-                 margin-bottom: 20px;">
+        <div class="container py-5">
 
-                <h1 style="margin: 0; color: #e87524;">
-                    Gestión de pedidos
-                </h1>
+            <div class="bg-white rounded-4 shadow-sm p-4 p-md-5">
 
-                <a href="${pageContext.request.contextPath}/logout"
-                   style="background: #e87524;
-                   color: white;
-                   padding: 10px 16px;
-                   border-radius: 6px;
-                   text-decoration: none;
-                   font-weight: bold;">
-                    Cerrar sesión
-                </a>
+                <!-- Encabezado -->
+                <div class="d-flex justify-content-between align-items-center
+                     flex-wrap gap-3 mb-4">
 
-            </div>
-            <c:if test="${param.registro == 'exito'}">
-                <p style="color: #218838;">
-                    Pedido registrado correctamente.
-                    Número: ${param.idPedido}
-                </p>
-            </c:if>
-            <h2>Registrar nuevo pedido</h2>
-
-            <form action="${pageContext.request.contextPath}/pedidos"
-                  method="post">
-
-                <label for="tipoAtencion">Tipo de atención:</label>
-
-                <select id="tipoAtencion" name="tipoAtencion" required>
-                    <option value="">Seleccionar tipo</option>
-                    <option value="MESA">Mesa</option>
-                    <option value="PARA_LLEVAR">Para llevar</option>
-                    <option value="DELIVERY">Delivery</option>
-                </select>
-
-                <br><br>
-
-                <label for="idMesa">Mesa:</label>
-
-                <select id="idMesa" name="idMesa">
-                    <option value="">Seleccionar mesa</option>
-
-                    <c:forEach var="mesa" items="${mesas}">
-                        <c:if test="${mesa.estado == 'LIBRE'}">
-                            <option value="${mesa.idMesa}">
-                                Mesa ${mesa.numero}
-                                - Capacidad: ${mesa.capacidad}
-                            </option>
-                        </c:if>
-                    </c:forEach>
-                </select>
-
-                <br><br>
-
-                <label for="direccionDelivery">
-                    Dirección de delivery:
-                </label>
-
-                <input type="text"
-                       id="direccionDelivery"
-                       name="direccionDelivery"
-                       maxlength="255">
-
-                <br><br>
-
-                <label for="observacion">Observaciones:</label>
-
-                <textarea id="observacion"
-                          name="observacion"
-                          rows="3"
-                          maxlength="500"></textarea>
-
-                <hr>
-
-                <h3>Productos del pedido</h3>
-
-                <div id="productosPedido">
-
-                    <div class="producto-pedido">
-
-                        <label>Producto:</label>
-
-                        <select name="idProducto" required>
-                            <option value="">Seleccionar producto</option>
-
-                            <c:forEach var="producto" items="${productos}">
-                                <option value="${producto.idProducto}">
-                                    ${producto.nombre} - S/ ${producto.precio}
-                                </option>
-                            </c:forEach>
-                        </select>
-
-                        <label>Cantidad:</label>
-
-                        <input type="number"
-                               name="cantidad"
-                               min="1"
-                               value="1"
-                               required>
-
+                    <div>
+                        <h1 class="fw-bold mb-2" style="color: #e87524;">
+                            Gestión de pedidos
+                        </h1>
+                        <p class="text-secondary mb-0">
+                            Registra pedidos y consulta su estado.
+                        </p>
                     </div>
+
+                    <a href="${pageContext.request.contextPath}/logout"
+                       class="btn btn-guardar">
+                        Cerrar sesión
+                    </a>
 
                 </div>
 
-                <br>
-
-                <button type="button" onclick="agregarProducto()">
-                    Agregar otro producto
-                </button>
-
-                <br><br>
-
-                <button type="submit">
-                    Registrar pedido
-                </button>
-
-            </form>
-
-            <script>
-                function agregarProducto() {
-                    const contenedor =
-                            document.getElementById("productosPedido");
-
-                    const fila = contenedor.querySelector(
-                            ".producto-pedido"
-                            ).cloneNode(true);
-
-                    fila.querySelector("select").selectedIndex = 0;
-                    fila.querySelector('input[name="cantidad"]').value = 1;
-
-                    contenedor.appendChild(fila);
-                }
-            </script>
-            <p>Consulta los pedidos registrados en la pollería.</p>
-
-            <c:choose>
-                <c:when test="${empty pedidos}">
-                    <div class="vacio">
-                        No hay pedidos registrados.
+                <!-- Mensaje de éxito -->
+                <c:if test="${param.registro == 'exito'}">
+                    <div class="alert alert-success" role="alert">
+                        Pedido registrado correctamente.
+                        Número: ${param.idPedido}
                     </div>
-                </c:when>
+                </c:if>
 
-                <c:otherwise>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>N.º</th>
-                                <th>Fecha</th>
-                                <th>Tipo de atención</th>
-                                <th>Mesa</th>
-                                <th>Usuario ID</th>
-                                <th>Estado ID</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
+                <!-- Formulario -->
+                <div class="card border-0 shadow-sm mb-5">
 
-                        <tbody>
-                            <c:forEach var="pedido" items="${pedidos}">
-                                <tr>
-                                    <td>${pedido.idPedido}</td>
-                                    <td>${pedido.fechaPedido}</td>
-                                    <td>${pedido.tipoAtencion}</td>
+                    <div class="card-header bg-white py-3">
+                        <h2 class="h5 fw-bold mb-0">Registrar nuevo pedido</h2>
+                    </div>
 
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${pedido.idMesa != null}">
-                                                ${pedido.idMesa}
-                                            </c:when>
-                                            <c:otherwise>
-                                                No aplica
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
+                    <div class="card-body">
 
-                                    <td>${pedido.idUsuario}</td>
-                                    <td>${pedido.idEstado}</td>
-                                    <td>S/ ${pedido.total}</td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </c:otherwise>
-            </c:choose>
+                        <form action="${pageContext.request.contextPath}/pedidos"
+                              method="post">
 
-        </div>
+                            <div class="row g-3">
+
+                                <div class="col-md-4">
+                                    <label for="tipoAtencion" class="form-label">
+                                        Tipo de atención
+                                    </label>
+
+                                    <select id="tipoAtencion"
+                                            name="tipoAtencion"
+                                            class="form-select"
+                                            required>
+                                        <option value="">Seleccionar tipo</option>
+                                        <option value="MESA">Mesa</option>
+                                        <option value="PARA_LLEVAR">Para llevar</option>
+                                        <option value="DELIVERY">Delivery</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="idMesa" class="form-label">
+                                        Mesa
+                                    </label>
+
+                                    <select id="idMesa"
+                                            name="idMesa"
+                                            class="form-select">
+                                        <option value="">Seleccionar mesa</option>
+
+                                        <c:forEach var="mesa" items="${mesas}">
+                                            <c:if test="${mesa.estado == 'LIBRE'}">
+                                                <option value="${mesa.idMesa}">
+                                                    Mesa ${mesa.numero}
+                                                    - Capacidad: ${mesa.capacidad}
+                                                </option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="direccionDelivery"
+                                           class="form-label">
+                                        Dirección de delivery
+                                    </label>
+
+                                    <input type="text"
+                                           class="form-control"
+                                           id="direccionDelivery"
+                                           name="direccionDelivery"
+                                           maxlength="255">
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="observacion" class="form-label">
+                                        Observaciones
+                                    </label>
+
+                                    <textarea id="observacion"
+                                              name="observacion"
+                                              class="form-control"
+                                              rows="2"
+                                              maxlength="500"></textarea>
+                                </div>
+
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h3 class="h6 fw-bold mb-3">
+                                Productos del pedido
+                            </h3>
+
+                            <div id="productosPedido">
+
+                                <div class="producto-pedido row g-3 align-items-end mb-3">
+
+                                    <div class="col-md-8">
+                                        <label class="form-label">Producto</label>
+
+                                        <select name="idProducto"
+                                                class="form-select"
+                                                required>
+                                            <option value="">Seleccionar producto</option>
+
+                                            <c:forEach var="producto" items="${productos}">
+                                                <option value="${producto.idProducto}">
+                                                    ${producto.nombre} - S/ ${producto.precio}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="form-label">Cantidad</label>
+
+                                        <input type="number"
+                                               name="cantidad"
+                                               class="form-control"
+                                               min="1"
+                                               value="1"
+                                               required>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <button type="button"
+                                                class="btn btn-secundario w-100"
+                                                onclick="agregarProducto()">
+                                            + Producto
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-4">
+                                <button type="submit" class="btn btn-guardar">
+                                    Registrar pedido
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <script>
+                    function agregarProducto() {
+                        const contenedor =
+                                document.getElementById("productosPedido");
+
+                        const fila = contenedor.querySelector(
+                                ".producto-pedido"
+                                ).cloneNode(true);
+
+                        fila.querySelector("select").selectedIndex = 0;
+                        fila.querySelector('input[name="cantidad"]').value = 1;
+
+                        contenedor.appendChild(fila);
+                    }
+                </script>
+
+                <h2 class="h4 fw-bold mb-3">Pedidos registrados</h2>
+
+                <div class="table-responsive">
+                    <c:choose>
+                        <c:when test="${empty pedidos}">
+                            <div class="alert alert-light border text-center py-4">
+                                No hay pedidos registrados.
+                            </div>
+                        </c:when>
+
+                        <c:otherwise>
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>N.º</th>
+                                        <th>Fecha</th>
+                                        <th>Tipo de atención</th>
+                                        <th>Mesa</th>
+                                        <th>Usuario ID</th>
+                                        <th>Estado ID</th>
+                                        <th class="text-end">Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <c:forEach var="pedido" items="${pedidos}">
+                                        <tr>
+                                            <td>${pedido.idPedido}</td>
+                                            <td>${pedido.fechaPedido}</td>
+                                            <td>${pedido.tipoAtencion}</td>
+
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${pedido.idMesa != null}">
+                                                        ${pedido.idMesa}
+                                                    </c:when>
+                                                    <c:otherwise>No aplica</c:otherwise>
+                                                </c:choose>
+                                            </td>
+
+                                            <td>${pedido.idUsuario}</td>
+                                            <td>${pedido.idEstado}</td>
+
+                                            <td class="text-end text-nowrap">
+                                                S/ ${pedido.total}
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:otherwise>
+                    </c:choose>
+                </div> <!-- Cierra el panel blanco -->
+            </div>     <!-- Cierra container -->
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     </body>
 </html>

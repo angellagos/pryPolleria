@@ -8,64 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar producto | Pollería</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 30px;
-            color: #333;
-        }
-
-        .contenedor {
-            max-width: 650px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px #00000015;
-        }
-
-        h1 {
-            color: #d35400;
-        }
-
-        label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 11px 18px;
-            background-color: #d35400;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #a84300;
-        }
-
-        .volver {
-            display: inline-block;
-            margin-top: 20px;
-            color: #d35400;
-            text-decoration: none;
-        }
-    </style>
+    <link href="${pageContext.request.contextPath}/css/editarPedidoStyle.css"
+              rel="stylesheet" type="text/css"/>
 </head>
 
 <body>

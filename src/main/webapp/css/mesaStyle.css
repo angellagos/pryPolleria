@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 30px;
+    color: #333;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #00000015;
+}
+
+h1 {
+    color: #d35400;
+}
+
+.mesas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.mesa {
+    padding: 22px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.mesa h2 {
+    margin-top: 0;
+}
+
+.libre {
+    background-color: #eaf7ed;
+    border-color: #218838;
+}
+
+.ocupada {
+    background-color: #fdecea;
+    border-color: #c0392b;
+}
+
+.inactiva {
+    background-color: #eeeeee;
+    border-color: #777777;
+}
+
+.estado {
+    font-weight: bold;
+}
+
+.vacio {
+    text-align: center;
+    padding: 25px;
+}
+
+.btn-guardar {
+    background-color: #e87524;
+    color: #ffffff;
+    border: 1px solid #e87524;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    transition: background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.btn-guardar:hover {
+    background-color: #c95d16;
+    border-color: #c95d16;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.btn-guardar:focus {
+    box-shadow: 0 0 0 0.2rem rgba(232, 117, 36, 0.25);
+}
+
+.btn-guardar:active {
+    background-color: #ad4e12;
+    color: #ffffff;
+}
